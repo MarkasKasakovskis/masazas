@@ -18,13 +18,13 @@ massage_prices = {
 }
 
 
-# Create a model for submissions
+
 class Submission(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     massage = db.Column(db.String(50))
     name = db.Column(db.String(50))
     phone = db.Column(db.String(20))
-    day = db.Column(db.String(10))  # Add the 'day' column
+    day = db.Column(db.String(10))  
     time = db.Column(db.String(5))
 
 
@@ -50,16 +50,16 @@ def create_app():
             time = request.form['time']
             selected_massage = request.form['massage']
 
-        # Check if a submission with the same day and time already exists
+        
         existing_submission = Submission.query.filter_by(day=day, time=time).first()
         if existing_submission:
             flash("A submission with the same day and time already exists. Please choose a different day or time.")
             return redirect(url_for('home'))
 
-        # Get the price based on the selected massage
-        price = massage_prices.get(selected_massage, 0)  # Default to 0 if massage not found
+        
+        price = massage_prices.get(selected_massage, 0)  
 
-        # Create a new submission and add it to the database
+        
         submission = Submission(
             massage=selected_massage,
             name=name,

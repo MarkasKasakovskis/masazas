@@ -5,16 +5,17 @@ from flask_admin.contrib.sqla import ModelView
 import os
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///submissions.db'  # SQLite database
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///submissions.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = os.urandom(24)
+
 
 db = SQLAlchemy(app)
 
 massage_prices = {
-    'Masazas1': 10,
-    'Masazas2': 20,
-    'Masazas3': 30
+    'Klasikinis masažas': 40,
+    'Karštu akmenų masažas':39,
+    'Masažas bioenerginiu masažuokliu': 20
 }
 
 
@@ -40,6 +41,17 @@ def create_app():
     def massage_info():
         return render_template('massage_info.html')
 
+    @app.route('/about-massage-therapist')
+    def about_massage_therapist():
+        return render_template('about_massage_therapist.html')
+
+    @app.route('/registration')
+    def registration():
+        return render_template('registration.html')
+
+    @app.route('/start')
+    def start():
+        return render_template('index.html')
 
     @app.route('/submit', methods=['POST'])
     def submit():
@@ -53,7 +65,7 @@ def create_app():
         
         existing_submission = Submission.query.filter_by(day=day, time=time).first()
         if existing_submission:
-            flash("A submission with the same day and time already exists. Please choose a different day or time.")
+            flash("Šis laikas jau užimtas. Pasirinkite kita jums patogu laiką.")
             return redirect(url_for('home'))
 
         
@@ -71,7 +83,7 @@ def create_app():
         db.session.add(submission)
         db.session.commit()
 
-        return f"Selected Massage: {selected_massage}<br>Price: ${price}<br>Name: {name}<br>Phone: {phone}<br>Day: {day}<br>Time: {time}"
+        return f"Jusu pasirinktas masažas: {selected_massage}<br>Kaina: {price}€<br>Vardas: {name}<br>Telefonas: {phone}<br>Diena: {day}<br>Laikas: {time}<br>Adresas: Kaunas, Parko g.1"
 
 
 if __name__ == '__main__':

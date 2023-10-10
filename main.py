@@ -14,7 +14,7 @@ db = SQLAlchemy(app)
 
 massage_prices = {
     'Klasikinis masažas': 40,
-    'Karštu akmenų masažas':39,
+    'Karštu akmenų masažas':50,
     'Masažas bioenerginiu masažuokliu': 20
 }
 
@@ -66,7 +66,7 @@ def create_app():
         existing_submission = Submission.query.filter_by(day=day, time=time).first()
         if existing_submission:
             flash("Šis laikas jau užimtas. Pasirinkite kita jums patogu laiką.")
-            return redirect(url_for('home'))
+            return redirect(url_for('registration'))
 
         
         price = massage_prices.get(selected_massage, 0)  
@@ -83,7 +83,7 @@ def create_app():
         db.session.add(submission)
         db.session.commit()
 
-        return f"Jusu pasirinktas masažas: {selected_massage}<br>Kaina: {price}€<br>Vardas: {name}<br>Telefonas: {phone}<br>Diena: {day}<br>Laikas: {time}<br>Adresas: Kaunas, Parko g.1"
+        return f"Jusu pasirinktas masažas: {selected_massage}<br>Kaina: {price}€<br>Diena: {day}<br>Laikas: {time}<br>Adresas: Kaunas, Išgalvota g.1<br>Užsirašykite kad nepamirštumėte."
 
 
 if __name__ == '__main__':

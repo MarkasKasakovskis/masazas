@@ -1,6 +1,7 @@
 body {
         font-family: Arial, sans-serif;
         background-color: #f0f0f0;
+        background-color: #E0E0E0;
      }
 ul {
             list-style: none;
@@ -8,10 +9,11 @@ ul {
    }
 li {
             margin-bottom: 10px;
+
         }
 a {
             text-decoration: none;
-            color: #007bff;
+            color: black;
         }
 
 a:hover {
@@ -25,4 +27,8 @@ ul {
 }
 li {
     font-size: 20px;
+}
+.text-center {
+    text-align: left;
+    width: 600px;
 }
